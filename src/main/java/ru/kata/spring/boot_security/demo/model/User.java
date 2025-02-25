@@ -16,21 +16,15 @@ public class User implements UserDetails {
     @Column(name = "user_id")
     private long id;
 
-    @Size(min = 1, max = 50, message = "Name should be between 1 and 50 characters")
     @Column(name = "first_name")
     private String firstName;
 
-    @Size(min = 1, max = 50, message = "Last name should be between 1 and 50 characters")
     @Column(name = "last_name")
     private String lastName;
 
-    @Min(value = 0, message = "Age should be greater then 0")
-    @Max(value = 127, message = "Age should be less then 128")
     @Column(name = "age")
     private byte age;
 
-    @NotEmpty(message = "The field should not be empty")
-    @Email(message = "Wrong format")
     @Column(name = "email", unique = true)
     private String email;
 
@@ -48,6 +42,15 @@ public class User implements UserDetails {
     private String password;
 
     public User() {
+    }
+
+    public User(String firstName, String lastName, byte age, String email, Set<Role> roles, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+        this.roles = roles;
+        this.password = password;
     }
 
     public User(long id, String firstName, String lastName, byte age, String email, Set<Role> roles, String password) {

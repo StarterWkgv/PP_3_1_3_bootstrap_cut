@@ -6,10 +6,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.dto.UserDto;
-import ru.kata.spring.boot_security.demo.mapper.UserDtoMapper;
-import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,12 +17,10 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class UserServiceImp implements UserService, UserDetailsService {
     private final UserRepository userRepository;
-    private final UserDtoMapper userDtoMapper;
     private final PasswordEncoder encoder;
 
-    public UserServiceImp(UserRepository userRepository, UserDtoMapper userDtoMapper, PasswordEncoder encoder) {
+    public UserServiceImp(UserRepository userRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
-        this.userDtoMapper = userDtoMapper;
         this.encoder = encoder;
     }
 
@@ -37,9 +33,9 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Transactional
     @Override
-    public void save(UserDto user) {
+    public void save(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(userDtoMapper.copy(user, new User()));
+        userRepository.save(user);
     }
 
     @Transactional
@@ -50,9 +46,9 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Transactional
     @Override
-    public boolean update(UserDto dto, long id) {
-        return getById(id).map(user -> {
-            userRepository.update(userDtoMapper.copy(dto, user), id);
+    public boolean update(User user, long id) {
+        return getById(id).map(u -> {
+            userRepository.update(u, id);
             return true;
         }).orElse(false);
 

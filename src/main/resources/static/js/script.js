@@ -71,23 +71,18 @@
 
     const fillInputs = fields => {
         return async (event) => {
-            try {
-                let response = await fetch(`/api/admin/users/${$(event.relatedTarget).data('uid')}`);
-                let user = await response.json();
-                if (!user) return;
-                Object.keys(user).forEach(k => {
-                    if (k === "password") return;
-                    if (k === "roles") {
-                        Array.from(fields.get(k).options).forEach(opt => {
-                            opt.selected = user[k].includes(opt.value);
-                        })
-                        return;
-                    }
-                    fields.get(k).value = user[k];
-                })
-            } catch (e) {
-                console.error("Couldn't get user data from the server", e);
-            }
+            let row = event.relatedTarget.parentElement.parentElement;
+            console.log("row", row);
+            row.querySelectorAll('[data-name]').forEach(n => {
+                let modalField = fields.get(n.dataset.name);
+                if (n.dataset.name === "roles") {
+                    Array.from(modalField.options).forEach(opt => {
+                        opt.selected = n.textContent.includes(opt.value);
+                    })
+                } else {
+                    modalField.value = n.textContent;
+                }
+            })
         }
     };
 
@@ -172,6 +167,36 @@
     document.getElementById("button-addNewUser")
         .addEventListener("click", fetchAndValidate("POST", addNewUserFields, errorAddNewUser,
             readFields(addNewUserFields), () => $('#nav-users-tab').tab('show')));
-
     await updateTable();
+
+    // ---------------------------------------------------------------------------
+    // const fillInputs_o = (row) => {
+    //     if (!row) return;
+    //     row.querySelectorAll('[data-name]').forEach(n => {
+    //         let modalField = modalFields.get(n.dataset.name);
+    //         if (n.dataset.name === "roles") {
+    //             Array.from(modalField.options).forEach(opt => {
+    //                 opt.selected = n.textContent.includes(opt.value);
+    //             })
+    //         } else {
+    //             modalField.value = n.textContent;
+    //         }
+    //     })
+    // }
+
+    // document.getElementById("info").addEventListener("click", evt => {
+    //
+    //     if (evt.target.classList.contains("button-edit")) {
+    //         showModal(modal, true);
+    //         fillInputs(evt.target.parentElement.parentElement);
+    //         disableFields(false);
+    //     }
+    //
+    //     if (evt.target.classList.contains("button-delete")) {
+    //         showModal(modal, true);
+    //         fillInputs(evt.target.parentElement.parentElement);
+    //         disableFields(true);
+    //     }
+    // });
+// ---------------------------------------------------------------------------
 })(getUpdateTable)

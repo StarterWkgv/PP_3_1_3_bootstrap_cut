@@ -22,7 +22,11 @@
     <div class="container-fluid px-1 ">
         <div>
             <a class="nav-username navbar-brand" id="navbar-username" href="#">
+
+                <span class="font-weight-bold" th:text="${details.getUsername()}"></span> <span >with     roles:</span>
+                <span  th:each="auth : ${details.getAuthorities()}"  th:text="|${auth.getAuthority()} |"></span>
             </a>
+
         </div>
         <form th:method="POST" th:action="@{/logout}">
             <input type="submit" class="float-right btn  bg-dark text-secondary nav-logout px-3" value="Logout">
@@ -85,6 +89,33 @@
                                     </tr>
                                     </thead>
                                     <tbody id="usersTable">
+                                    <tr th:each="user : ${users}">
+                                        <td data-name="id" th:text="${user.getId()}"></td>
+                                        <td data-name="firstName" th:text="${user.getFirstName()}"></td>
+                                        <td data-name="lastName" th:text="${user.getLastName()}"></td>
+                                        <td data-name="age" th:text="${user.getAge()}"></td>
+                                        <td data-name="email" th:text="${user.getEmail()}"></td>
+                                        <td data-name="roles">
+                                            <span th:each="auth : ${user.getAuthorities()}"
+                                                  th:text="|${auth.getAuthority()} |"></span>
+                                        </td>
+
+                                        <td>
+                                            <button type="button" class="btn btn-info px-1 py-1 "
+                                                    th:attr="data-uid=${user.getId()}"
+                                                     data-toggle="modal"
+                                                    data-target="#modal-edit">Edit
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger px-1 py-1 "
+                                                    th:attr="data-uid=${user.getId()}"
+                                                    data-toggle="modal"
+                                                    data-target="#modal-delete">Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+
                                     </tbody>
                                 </table>
 
@@ -150,8 +181,8 @@
                                             <label for="newRoles">Role</label>
                                             <select data-name="roles" id="newRoles" class="form-control h-select "
                                                     multiple>
-                                                <option th:each="r : ${rolList}" th:value="${r.name()}"
-                                                        th:text="${r.name()}"></option>
+                                                <option th:each="r : ${rolList}" th:value="${r}"
+                                                        th:text="${r}"></option>
                                             </select>
                                             <div class="invalid-tooltip mt-2" data-error="roles"></div>
                                         </div>
@@ -256,7 +287,7 @@
                             <label for="deleteRoles">Role</label>
                             <select id="deleteRoles" class="form-control h-select mb-0" data-name="roles" multiple
                                     disabled>
-                                <option th:each="r : ${rolList}" th:value="${r.name()}" th:text="${r.name()}"></option>
+                                <option th:each="r : ${rolList}" th:value="${r}" th:text="${r}"></option>
                             </select>
                         </div>
 
@@ -337,7 +368,7 @@
                         <div class="node">
                             <label for="editRoles">Role</label>
                             <select id="editRoles" class="form-control h-select mb-0" data-name="roles" multiple>
-                                <option th:each="r : ${rolList}" th:value="${r.name()}" th:text="${r.name()}"></option>
+                                <option th:each="r : ${rolList}" th:value="${r}" th:text="${r}"></option>
                             </select>
                             <div class="invalid-tooltip mt-4" data-error="roles"></div>
                         </div>

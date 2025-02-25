@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kata.spring.boot_security.demo.util.RoleType;
 
 @Configuration
 @EnableWebSecurity
@@ -22,8 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**", "/api/admin/**").hasAuthority(RoleType.ADMIN.name())
-                .antMatchers("/user", "/api/user").hasAnyAuthority(RoleType.ADMIN.name(), RoleType.USER.name())
+                .antMatchers("/admin/**", "/api/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/user", "/api/user").hasAnyAuthority("ADMIN", "USER")
                 .antMatchers("/", "/index").permitAll()
                 .anyRequest().authenticated()
                 .and()

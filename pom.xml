@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.kata</groupId>
-	<artifactId>spring-boot_security-demo</artifactId>
+	<artifactId>PP_3_1_3_bootstrap</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot_security-demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>PP_3_1_3_bootstrap</name>
+	<description>Demo project for Bootstrap</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
