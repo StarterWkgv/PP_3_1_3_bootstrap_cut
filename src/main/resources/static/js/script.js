@@ -98,7 +98,7 @@
                 let id = modalFields.get("id");
                 const reqHeaders = new Headers();
                 reqHeaders.append(csrfHeader, csrfValue);
-                reqHeaders.append('Content-Type', 'application/json',);
+                reqHeaders.append('Content-Type', 'application/x-www-form-urlencoded',);
                 const response = await fetch(`/api/admin/users/${id ? id.value : ''}`,
                     {
                         method: met,
@@ -156,10 +156,11 @@
     document.getElementById("editAge").addEventListener("input", validateAge);
     document.getElementById("newAge").addEventListener("input", validateAge);
 
+    //обработчик на кнопку удалить в модальном окне
     document.getElementById("button-delete")
-        .addEventListener("click", fetchAndValidate("DELETE", deleteFields,
-            new Map(), null, () => modalDelete.modal('hide')));
-   
+        .addEventListener("click", (e) => e.target.href = `/admin/delete/${document.getElementById('deleteId').value}`);
+
+  //обработчик на кнопку редактировать в модальном окне
     document.getElementById("button-edit")
         .addEventListener("click", fetchAndValidate("PUT", editFields, errorEdit,
             readFields(editFields), () => modalEdit.modal('hide')));
@@ -169,34 +170,4 @@
             readFields(addNewUserFields), () => $('#nav-users-tab').tab('show')));
     await updateTable();
 
-    // ---------------------------------------------------------------------------
-    // const fillInputs_o = (row) => {
-    //     if (!row) return;
-    //     row.querySelectorAll('[data-name]').forEach(n => {
-    //         let modalField = modalFields.get(n.dataset.name);
-    //         if (n.dataset.name === "roles") {
-    //             Array.from(modalField.options).forEach(opt => {
-    //                 opt.selected = n.textContent.includes(opt.value);
-    //             })
-    //         } else {
-    //             modalField.value = n.textContent;
-    //         }
-    //     })
-    // }
-
-    // document.getElementById("info").addEventListener("click", evt => {
-    //
-    //     if (evt.target.classList.contains("button-edit")) {
-    //         showModal(modal, true);
-    //         fillInputs(evt.target.parentElement.parentElement);
-    //         disableFields(false);
-    //     }
-    //
-    //     if (evt.target.classList.contains("button-delete")) {
-    //         showModal(modal, true);
-    //         fillInputs(evt.target.parentElement.parentElement);
-    //         disableFields(true);
-    //     }
-    // });
-// ---------------------------------------------------------------------------
 })(getUpdateTable)

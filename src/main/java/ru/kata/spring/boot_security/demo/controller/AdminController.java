@@ -28,34 +28,22 @@ public class AdminController {
         model.addAttribute("users", list);
         return "page";
     }
-//    @GetMapping({"/user", "/admin"})
-//    public String showUser(@AuthenticationPrincipal User user, Model model) {
-//        boolean isAdmin = user.getRoles().stream().anyMatch(r -> r.getRole().equals("ADMIN"));
-//        model.addAttribute("isAdmin", isAdmin);
-//        model.addAttribute("rolList", new String[]{"ADMIN", "USER"});
-//        return "/page";
-//    }
-//
-
 
     @PostMapping("/new")
-    public String addNewUser(@ModelAttribute("user") User user, BindingResult br) {
+    public String addNewUser(@ModelAttribute("user") User user) {
         userService.save(user);
         return "redirect:/admin";
     }
 
     @PostMapping("/{id}")
-    public String editUser(@PathVariable("id") long id,  @ModelAttribute("user") User user) {
-
+    public String editUser(@PathVariable("id") long id, @ModelAttribute("user") User user) {
         userService.update(user, id);
         return "page";
     }
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") long id) {
-
         userService.delete(id);
         return "redirect:/admin";
     }
-
 }
