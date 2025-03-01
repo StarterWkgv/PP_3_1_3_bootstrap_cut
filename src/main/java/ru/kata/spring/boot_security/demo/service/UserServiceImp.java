@@ -48,7 +48,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Override
     public boolean update(User user, long id) {
         return getById(id).map(u -> {
-            userRepository.update(u, id);
+            userRepository.update(user, id);
             return true;
         }).orElse(false);
 

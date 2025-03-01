@@ -4,6 +4,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import ru.kata.spring.boot_security.demo.model.User;
 
 @ControllerAdvice
 public class ControllerAdviceImp {
@@ -14,7 +15,7 @@ public class ControllerAdviceImp {
     }
 
     @ModelAttribute("details")
-    public UserDetails details(@AuthenticationPrincipal UserDetails ud) {
+    public UserDetails details(@AuthenticationPrincipal User ud) {
         return ud;
     }
 }

@@ -227,6 +227,17 @@
                             </tr>
                             </thead>
                             <tbody id="userInfo">
+                            <tr>
+                                <td data-name="id" th:text="${details.getId()}"></td>
+                                <td data-name="firstName" th:text="${details.getFirstName()}"></td>
+                                <td data-name="lastName" th:text="${details.getLastName()}"></td>
+                                <td data-name="age" th:text="${details.getAge()}"></td>
+                                <td data-name="email" th:text="${details.getEmail()}"></td>
+                                <td data-name="roles">
+                    <span th:each="auth : ${details.getAuthorities()}"
+                          th:text="|${auth.getAuthority()} |"></span>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
 
@@ -399,7 +410,7 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 
-<script src="/js/userscript.js"></script>
+<!--<script src="/js/userscript.js"></script>-->
 <script th:if="${isAdmin}" src="/js/script.js"></script>
 </body>
 
