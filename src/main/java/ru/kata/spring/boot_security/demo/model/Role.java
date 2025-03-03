@@ -3,10 +3,11 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "role")
-public class Role implements GrantedAuthority, Comparable<Role>{
+public class Role implements GrantedAuthority, Comparable<Role> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
@@ -58,7 +59,7 @@ public class Role implements GrantedAuthority, Comparable<Role>{
         if (this == o) return true;
         if (!(o instanceof Role)) return false;
         Role role1 = (Role) o;
-        return getRole() == role1.getRole();
+        return Objects.equals(getRole(), role1.getRole());
     }
 
     @Override

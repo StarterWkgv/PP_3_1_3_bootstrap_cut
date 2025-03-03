@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +18,8 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showAllUsersPage(@AuthenticationPrincipal User user, Model model) {
+    public String showAllUsersPage(Model model) {
         List<User> list = userService.findAll();
-        boolean isAdmin = user.getRoles().stream().anyMatch(r -> r.getRole().equals("ADMIN"));
-        model.addAttribute("isAdmin", isAdmin);
-        model.addAttribute("rolList", new String[]{"ADMIN", "USER"});
         model.addAttribute("users", list);
         return "page";
     }

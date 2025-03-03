@@ -23,8 +23,8 @@
         <div>
             <a class="nav-username navbar-brand" id="navbar-username" href="#">
 
-                <span class="font-weight-bold" th:text="${details.getUsername()}"></span> <span >with     roles:</span>
-                <span  th:each="auth : ${details.getAuthorities()}"  th:text="|${auth.getAuthority()} |"></span>
+                <span class="font-weight-bold" th:text="${details.getUsername()}"></span> <span>with     roles:</span>
+                <span th:each="auth : ${details.getAuthorities()}" th:text="|${auth.getAuthority()} |"></span>
             </a>
 
         </div>
@@ -38,12 +38,8 @@
     <div class="col-2 px-0 pt-4 mt-3 side-font bg-white">
         <div class="nav flex-column nav-pills pt-4" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a th:if="${isAdmin}" class="nav-link px-3 py-2" th:classappend="${adminPanel ? 'active' : ''}"
-               id="v-pills-admin-tab"
-               data-toggle="pill" href="#v-pills-admin"
-               role="tab" aria-controls="v-pills-admin" aria-selected="true">Admin</a>
-            <a class="nav-link   px-3 py-2" th:classappend="${!adminPanel ? 'active' : ''}" id="v-pills-user-tab"
-               data-toggle="pill" href="#v-pills-user" role="tab"
-               aria-controls="v-pills-user" aria-selected="false">User</a>
+               th:href="@{/admin}">Admin</a>
+            <a class="nav-link   px-3 py-2" th:classappend="${!adminPanel ? 'active' : ''}" th:href="@{/user}">User</a>
         </div>
     </div>
 
@@ -103,7 +99,7 @@
                                         <td>
                                             <button type="button" class="btn btn-info px-1 py-1 "
                                                     th:attr="data-uid=${user.getId()}"
-                                                     data-toggle="modal"
+                                                    data-toggle="modal"
                                                     data-target="#modal-edit">Edit
                                             </button>
                                         </td>
@@ -304,9 +300,7 @@
 
                     </div>
                 </div>
-
                 <!-- end delete fields -->
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -316,7 +310,6 @@
     </div>
 </div>
 <!-- End Modal Delete -->
-
 
 <!-- Modal Edit -->
 <div class="modal fade bd-example-modal-lg" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editLabel"
@@ -399,7 +392,6 @@
 </div>
 <!-- End Modal Edit -->
 
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -410,7 +402,6 @@
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
 
-<!--<script src="/js/userscript.js"></script>-->
 <script th:if="${isAdmin}" src="/js/script.js"></script>
 </body>
 

@@ -3,7 +3,8 @@ package ru.kata.spring.boot_security.demo.init;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+import ru.kata.spring.boot_security.demo.service.RoleService;
+import ru.kata.spring.boot_security.demo.service.UserService;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
 import javax.annotation.PostConstruct;
@@ -12,27 +13,27 @@ import java.util.List;
 
 @Component
 public class InitDB {
-    private final UserServiceImp userService;
-    private final RoleRepository roleRepository;
+    private final UserService userService;
+    private final RoleService roleService;
 
-    public InitDB(UserServiceImp userService, RoleRepository roleRepository) {
+    public InitDB(UserServiceImp userService, RoleService roleService) {
         this.userService = userService;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
     }
 
     @PostConstruct
     public void init() {
         Role roleAdmin = new Role("ADMIN");
         Role roleUser = new Role("USER");
-        if (roleRepository.findByRole(roleAdmin.getRole()).isEmpty()) {
-            roleRepository.save(roleAdmin);
+        if (roleService.findByRole(roleAdmin.getRole()).isEmpty()) {
+            roleService.save(roleAdmin);
         }
-        if (roleRepository.findByRole(roleUser.getRole()).isEmpty()) {
-            roleRepository.save(roleUser);
+        if (roleService.findByRole(roleUser.getRole()).isEmpty()) {
+            roleService.save(roleUser);
         }
         if (userService.getUserByEmail("admin").isEmpty()) {
             User admin = new User("Admin", "Admin", (byte) 30, "admin",
-                    new HashSet<>(List.of(roleAdmin,roleUser)), "admin");
+                    new HashSet<>(List.of(roleAdmin, roleUser)), "admin");
             userService.save(admin);
         }
         if (userService.getUserByEmail("user").isEmpty()) {

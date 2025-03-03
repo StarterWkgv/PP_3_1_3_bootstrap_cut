@@ -1,26 +1,22 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.Collections;
-
-//@Controller
-//@RequestMapping("/")
+@Controller
+@RequestMapping("/user")
 public class UserController {
-//    @GetMapping({"/", "/index"})
-//    public String index() {
-//        return "redirect:/login";
-//    }
-//
-//    @GetMapping("/user")
-//    public String showUser(@AuthenticationPrincipal User user, Model model) {
-//        model.addAttribute("users", Collections.singleton(user));
-//        return "/user/user";
-//    }
+   final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping
+    public String showUser() {
+        return "page";
+    }
 
 }

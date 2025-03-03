@@ -110,7 +110,6 @@
                             body: formData,
                         });
                     if (response.redirected) {
-                        alert(response.status)
                         window.location.href = response.url;
                     }
                     if (!response.ok) {
@@ -147,17 +146,14 @@
         document.getElementById("editAge").addEventListener("input", validateAge);
         document.getElementById("newAge").addEventListener("input", validateAge);
 
-//обработчик на кнопку удалить в модальном окне
         document.getElementById("button-delete")
             .addEventListener("click", (e) => e.target.href = `/admin/delete/${document.getElementById('deleteId').value}`);
 
-//обработчик на кнопку редактировать в модальном окне
         document.getElementById("button-edit")
-            .addEventListener("click", fetchData("admin",editFields,readFields(editFields)));
+            .addEventListener("click", fetchData("admin", editFields, readFields(editFields)));
 
         document.getElementById("button-addNewUser")
             .addEventListener("click", fetchData("admin/new", addNewUserFields, readFields(addNewUserFields)));
-// await updateTable();
 
     }
 )
