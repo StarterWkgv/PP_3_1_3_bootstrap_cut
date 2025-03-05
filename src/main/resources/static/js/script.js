@@ -61,7 +61,9 @@
             return () => {
                 let user = {};
                 fields.forEach((v, k) => {
-                    user[k] = k === "roles" ? Array.from(v.selectedOptions).map(r => r.value) : v.value;
+                    user[k] = k === "roles" ? Array.from(v.selectedOptions).map(r => {
+                        return {role: r.value, id: r.dataset["id"]}
+                    }) : v.value;
                 });
                 return user;
             }
@@ -91,8 +93,8 @@
 
         const fetchData = (url, modalFields, readData) => {
             return async () => {
+                const met = "POST";
                 try {
-                    const met = "POST";
                     let id = modalFields.get("id");
                     const reqHeaders = new Headers();
                     reqHeaders.append(csrfHeader, csrfValue);
@@ -103,6 +105,7 @@
                     for (const key in user) {
                         formData.append(key, user[key]);
                     }
+                    console.log("formData:" + formData);
                     const response = await fetch(`${url}${id ? '/' + id.value : ''}`,
                         {
                             method: met,

@@ -177,8 +177,8 @@
                                             <label for="newRoles">Role</label>
                                             <select data-name="roles" id="newRoles" class="form-control h-select "
                                                     multiple>
-                                                <option th:each="r : ${rolList}" th:value="${r}"
-                                                        th:text="${r}"></option>
+                                                <option th:each="r : ${rolList}" th:value="${r.getRole()}"
+                                                        th:text="${r.getRole()}" th:attr="data-id=${r.getId()}"></option>
                                             </select>
                                             <div class="invalid-tooltip mt-2" data-error="roles"></div>
                                         </div>
@@ -186,13 +186,10 @@
                                             <button id="button-addNewUser" type="button" class="btn btn-success btn-lg">
                                                 Add new user
                                             </button>
-
                                         </div>
-
                                     </div>
                                 </div>
                                 <!-- Form add new user -->
-
                             </div>
                         </div>
                     </div>
@@ -294,7 +291,7 @@
                             <label for="deleteRoles">Role</label>
                             <select id="deleteRoles" class="form-control h-select mb-0" data-name="roles" multiple
                                     disabled>
-                                <option th:each="r : ${rolList}" th:value="${r}" th:text="${r}"></option>
+                                <option th:each="r : ${rolList}" th:value="${r.getRole()}" th:text="${r.getRole()}"></option>
                             </select>
                         </div>
 
@@ -372,7 +369,8 @@
                         <div class="node">
                             <label for="editRoles">Role</label>
                             <select id="editRoles" class="form-control h-select mb-0" data-name="roles" multiple>
-                                <option th:each="r : ${rolList}" th:value="${r}" th:text="${r}"></option>
+                                <option  th:each="r : ${rolList}" th:value="${r.getRole()}" th:text="${r.getRole()}" th:attr="data-id=${r.getId()}"></option>
+
                             </select>
                             <div class="invalid-tooltip mt-4" data-error="roles"></div>
                         </div>

@@ -25,8 +25,8 @@ public class ControllerAdviceImp {
     }
 
     @ModelAttribute("rolList")
-    public List<String> roleList() {
-        return roleService.findAll().stream().map(Role::getRole).collect(Collectors.toList());
+    public List<Role> roleList() {
+        return roleService.findAll();
     }
 
     @ModelAttribute("details")

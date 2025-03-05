@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 
-@Component
 public class StringToRoleConverter implements Converter<String, Role> {
 
     private final RoleRepository roleRepository;
