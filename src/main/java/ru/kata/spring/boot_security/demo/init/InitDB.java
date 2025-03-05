@@ -32,15 +32,12 @@ public class InitDB {
             roleService.save(roleUser);
         }
         if (userService.getUserByEmail("admin").isEmpty()) {
-            User admin = new User("Admin", "Admin", (byte) 30, "admin",
-                    new HashSet<>(List.of(roleAdmin, roleUser)), "admin");
+            User admin = new User("Admin", "Admin", (byte) 30, "admin", new HashSet<>(List.of(roleAdmin, roleUser)), "admin");
             userService.save(admin);
         }
         if (userService.getUserByEmail("user").isEmpty()) {
-            User user = new User("User", "User", (byte) 35, "user",
-                    new HashSet<>(List.of(roleUser)), "user");
+            User user = new User("User", "User", (byte) 35, "user", new HashSet<>(List.of(roleUser)), "user");
             userService.save(user);
         }
-
     }
 }

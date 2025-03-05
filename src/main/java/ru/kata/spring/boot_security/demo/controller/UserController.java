@@ -8,7 +8,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-   final UserService userService;
+    final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;

@@ -26,9 +26,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     public List<User> findAll() {
-        return userRepository.findAll().stream()
-                .sorted((a, b) -> (int) (a.getId() - b.getId()))
-                .collect(Collectors.toList());
+        return userRepository.findAll().stream().sorted((a, b) -> (int) (a.getId() - b.getId())).collect(Collectors.toList());
     }
 
     @Transactional
@@ -41,14 +39,25 @@ public class UserServiceImp implements UserService, UserDetailsService {
     @Transactional
     @Override
     public boolean delete(long id) {
-        return userRepository.delete(id);
+        return userRepository.findById(id).map(u -> {
+            userRepository.delete(u);
+            return true;
+        }).orElse(false);
     }
 
     @Transactional
     @Override
     public boolean update(User user, long id) {
         return getById(id).map(u -> {
-            userRepository.update(user, id);
+            u.setFirstName(user.getFirstName());
+            u.setLastName(user.getLastName());
+            u.setAge(user.getAge());
+            u.setEmail(user.getEmail());
+            u.setRoles(user.getRoles());
+            if (!user.getPassword().isEmpty()) {
+                u.setPassword(encoder.encode(user.getPassword()));
+            }
+            userRepository.save(u);
             return true;
         }).orElse(false);
 
@@ -56,17 +65,16 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     public Optional<User> getById(long id) {
-        return userRepository.getById(id);
+        return userRepository.findById(id);
     }
 
     @Override
     public Optional<User> getUserByEmail(String email) {
-        return userRepository.getUserByEmail(email);
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.getUserByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

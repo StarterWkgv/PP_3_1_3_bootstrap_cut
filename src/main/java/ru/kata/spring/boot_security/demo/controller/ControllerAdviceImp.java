@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerAdviceImp {
-    final RoleService roleService;
+    private final RoleService roleService;
     private final UserService userService;
 
     public ControllerAdviceImp(RoleService roleService, UserService userService) {
@@ -26,23 +26,20 @@ public class ControllerAdviceImp {
 
     @ModelAttribute("rolList")
     public List<String> roleList() {
-        return roleService.findAll().stream()
-                .map(Role::getRole)
-                .collect(Collectors.toList());
+        return roleService.findAll().stream().map(Role::getRole).collect(Collectors.toList());
     }
 
     @ModelAttribute("details")
     public UserDetails details(@AuthenticationPrincipal UserDetails curUser) {
-        return userService.getUserByEmail(curUser.getUsername())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        return userService.getUserByEmail(curUser.getUsername()).orElseThrow(() -> new UserNotFoundException("User not found"));
 
     }
 
     @ModelAttribute("isAdmin")
     public boolean isAdmin(@AuthenticationPrincipal User curUser) {
-        return curUser.getRoles().stream()
-                .anyMatch(r -> r.getRole().equals("ADMIN"));
+        return curUser.getRoles().stream().anyMatch(r -> r.getRole().equals("ADMIN"));
     }
+
     @ExceptionHandler(UserNotFoundException.class)
     public String handleUserNotFoundException() {
         return "login";
