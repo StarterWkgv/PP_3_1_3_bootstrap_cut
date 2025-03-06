@@ -60,7 +60,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
             userRepository.save(u);
             return true;
         }).orElse(false);
-
     }
 
     @Override
