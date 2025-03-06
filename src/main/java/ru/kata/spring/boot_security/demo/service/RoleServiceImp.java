@@ -1,6 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
@@ -8,7 +8,7 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 @Transactional(readOnly = true)
 public class RoleServiceImp implements RoleService {
 

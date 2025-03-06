@@ -12,7 +12,6 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ControllerAdviceImp {
@@ -32,7 +31,6 @@ public class ControllerAdviceImp {
     @ModelAttribute("details")
     public UserDetails details(@AuthenticationPrincipal UserDetails curUser) {
         return userService.getUserByEmail(curUser.getUsername()).orElseThrow(() -> new UserNotFoundException("User not found"));
-
     }
 
     @ModelAttribute("isAdmin")

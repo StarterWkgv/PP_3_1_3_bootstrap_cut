@@ -9,7 +9,6 @@
     const errorEdit = new Map();
     const errorAddNewUser = new Map();
     let errorObj = null;
-    const showElement = e => e.style.display = "block";
     const hideElement = e => e.style.display = "none";
 
     const row = user => {
@@ -21,8 +20,6 @@
         out += `${but("info", user.id, "edit")} ${but("danger", user.id, "delete")}`;
         return out;
     };
-
-    // const updateTable = getUpdateTable(USERS_URL, row, USERS_TABLE);
 
     const fillMap = (modalId, fieldsMap, errorMap) => {
         document.getElementById(modalId).querySelectorAll("[data-name]").forEach(node => {
@@ -70,12 +67,11 @@
     const fillInputs = fields => {
         return async (event) => {
             let row = event.relatedTarget.parentElement.parentElement;
-            console.log("row", row);
             row.querySelectorAll('[data-name]').forEach(n => {
                 let modalField = fields.get(n.dataset.name);
                 if (n.dataset.name === "roles") {
                     Array.from(modalField.options).forEach(opt => {
-                        opt.selected = n.textContent.includes(opt.value);
+                        opt.selected = n.textContent.includes(opt.textContent);
                     })
                 } else {
                     modalField.value = n.textContent;
@@ -102,7 +98,7 @@
                 const formData = new FormData();
                 for (const key in user) {
                     if (key === 'roles') {
-                        for (const r in user[key]){
+                        for (const r in user[key]) {
                             formData.append("roles", user[key][r])
                         }
                     } else {
@@ -110,12 +106,9 @@
                     }
                 }
                 console.log("formData:" + formData);
-                const response = await fetch(`${url}${id ? '/' + id.value : ''}`,
-                    {
-                        method: met,
-                        headers: reqHeaders,
-                        body: formData,
-                    });
+                const response = await fetch(`${url}${id ? '/' + id.value : ''}`, {
+                    method: met, headers: reqHeaders, body: formData,
+                });
                 if (response.redirected) {
                     window.location.href = response.url;
                 }
@@ -132,8 +125,7 @@
     const validateAge = e => {
         try {
             let v = parseInt(e.target.value);
-            if (v > 127)
-                e.target.value = 127;
+            if (v > 127) e.target.value = 127;
             if (v < 0) e.target.value = 0;
         } catch (e) {
             e.target.value = 0;
@@ -148,6 +140,10 @@
         clearFields(addNewUserFields);
         clearErrorFields(errorAddNewUser);
     });
+    $('#nav-newUser-tab').on('show.bs.tab', () => {
+        clearFields(addNewUserFields);
+        clearErrorFields(errorAddNewUser);
+    })
     $('#v-pills-admin-tab').on('show.bs.tab', async () => await updateTable());
 
     document.getElementById("editAge").addEventListener("input", validateAge);
