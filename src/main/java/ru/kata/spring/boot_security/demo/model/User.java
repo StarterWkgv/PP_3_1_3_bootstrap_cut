@@ -30,7 +30,6 @@ public class User implements UserDetails {
     private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
-//    @Fetch(FetchMode.JOIN)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     @NotEmpty(message = "The field should not be empty")
     private Set<Role> roles;
