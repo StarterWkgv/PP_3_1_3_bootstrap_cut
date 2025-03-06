@@ -32,6 +32,9 @@ public class AdminController {
 
     @PostMapping("/{id}")
     public String editUser(@PathVariable("id") long id, @ModelAttribute("user") User user) {
+//        if (userRoles != null && !userRoles.isEmpty()) {
+//            user.setRoles();
+//        }
         userService.update(user, id);
         return "redirect:/admin";
     }
